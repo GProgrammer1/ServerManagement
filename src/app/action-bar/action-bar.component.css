@@ -1,0 +1,17 @@
+
+/* Ensure the toolbar takes full width */
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: aquamarine;
+  }
+  
+  .spacer {
+    flex: 1;
+  }
+  
+  mat-form-field {
+    margin-right: 16px; /* Adjust margin as needed */
+  }
+  

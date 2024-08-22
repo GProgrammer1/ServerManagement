@@ -1,0 +1,41 @@
+/* Ensures the table takes full width of the container and collapses borders */
+table.mat-elevation-z8 {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Ensures columns are evenly distributed */
+    margin: 0 auto; /* Optional: Center table horizontally */
+}
+
+/* Ensures table headers and cells have padding and text alignment */
+th.mat-header-cell, td.mat-cell {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+/* Ensures the image inside the table cell does not exceed the cell's width */
+.tablecell {
+    max-width: 50px; /* Adjust this value to fit your needs */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    
+}
+
+/* Makes sure the table headers are distinguishable */
+th.mat-header-cell {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    text-align: center;
+}
+.image-container {
+    justify-content: center;
+    align-items: center;
+    
+}
+.loading-icon {
+    margin: 0 auto;
+}
+
+
+

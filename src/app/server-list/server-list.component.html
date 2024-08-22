@@ -1,0 +1,71 @@
+<table mat-table [dataSource]="serverData" class="mat-elevation-z8 image-container" > <!--mat-elevation-z8 gives the table a shadow-->
+    <ng-container matColumnDef="imageURL">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Image URL </th>
+        <td mat-cell *matCellDef="let server" class="mat-cell">
+            <img src="{{server.imageURL}}" alt="" class="tablecell"> 
+        </td>
+    </ng-container>
+
+    <!-- IP Address Column -->
+    <ng-container matColumnDef="ipAddress">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> IP Address </th>
+        <td mat-cell *matCellDef="let server" class="mat-cell"> {{server.ipAddress}} </td>
+    </ng-container>
+  
+    <!-- Memory Column -->
+    <ng-container matColumnDef="memory">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Memory </th>
+        <td mat-cell *matCellDef="let server" class="mat-cell"> {{server.memory}} </td>
+    </ng-container>
+  
+    <!-- Type Column -->
+    <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Type </th>
+        <td mat-cell *matCellDef="let server" class="mat-cell"> {{server.type}} </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Name </th>
+        <td mat-cell *matCellDef="let server" class="mat-cell"> {{server.name}} </td>
+    </ng-container>
+  
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Status </th>
+        <td mat-cell *matCellDef="let server" class="mat-cell stts" [style.color]="server.status === 'SERVER_DOWN' ? 'red' : 'green' "> {{server.status}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ping">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Ping</th>
+        <td mat-cell *matCellDef="let server" class="mat-cell">
+            <!--If-else block to be reviewed-->
+           @if(!server.loading)  {
+            <button mat-icon-button (click)="onPing(server.ipAddress)">            
+                <mat-icon class="ping-icon">router</mat-icon>
+            </button>
+            }
+            @else {
+                
+                <mat-progress-spinner
+                [color]="'primary'"
+                [mode]="'indeterminate'"
+                [diameter]="50" 
+                class="loading-icon">
+                </mat-progress-spinner>
+            }
+        
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Actions</th>
+        <td mat-cell *matCellDef="let server" class="mat-cell">
+            <button mat-icon-button (click)="onDelete(server.id)">
+            <mat-icon class="delete-icon" >delete</mat-icon>
+        </button>
+        </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

@@ -1,0 +1,56 @@
+
+ 
+<form [formGroup]="addServer" class="addForm">
+  <mat-icon class="close-button">
+    <button mat-raised-button (click)="onCancel()">close</button>
+  </mat-icon>
+ <h2 mat-dialog-title>Add Server</h2>
+  <mat-form-field appearance="fill">
+    <mat-label> IP Address</mat-label>
+    <input matInput formControlName="ipAddress" placeholder="Enter IP Address">
+    <mat-error>
+      @if(addServer.get('ipAddress')!.hasError('required')) {
+        IP Address required
+      }
+      @else if (addServer.get('ipAddress')!.hasError('invalidIpAddress')) {
+        Invalid IP Address
+      }
+      @else if (addServer.get('ipAddress')!.hasError('ipExists')) {
+        IP Address already exists
+      }
+    </mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label> Name</mat-label>
+    <input matInput formControlName="name" placeholder="Enter Name">
+    <mat-error>
+      @if(addServer.get('name')!.hasError('required')) {
+        Name required
+      }
+    </mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label> Type</mat-label>
+    <input matInput formControlName="type" placeholder="Enter Type">
+    <mat-error>
+      @if(addServer.get('type')!.hasError('required')) {
+        Type required
+      }
+    </mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label> Memory</mat-label>
+    <input matInput formControlName="memory" placeholder="Enter Memory">
+    <mat-error>
+      @if(addServer.get('memory')!.hasError('required')) {
+        Memory required
+      }
+    </mat-error>
+  </mat-form-field>
+  <br>
+  
+  <button mat-raised-button (click)="onSubmit()">Submit</button>
+</form>

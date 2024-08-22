@@ -1,0 +1,28 @@
+<mat-toolbar color="primary">
+  <span>Manage Servers</span>
+  
+  <span class="spacer"></span>
+  
+  <!-- Status Filter -->
+  <mat-form-field appearance="fill">
+    <mat-label>Status</mat-label>
+    <mat-select [(ngModel)]="selectedStatus" (selectionChange)="filter()">
+      <mat-option value="ALL">ALL</mat-option>
+      <mat-option value="SERVER_UP">SERVER_UP</mat-option>
+      <mat-option value="SERVER_DOWN">SERVER_DOWN</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- New Server Button -->
+  <button mat-raised-button color="accent" (click)="onClick()" >
+    <mat-icon>add</mat-icon>
+    New Server
+  </button>
+
+  <!-- Print Report Button -->
+  <button mat-raised-button color="warn" (click)="print()" >
+    <mat-icon>print</mat-icon>
+    Print Report
+  </button>
+</mat-toolbar>
+
