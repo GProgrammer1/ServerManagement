@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './error.component.css'
 })
 export class ErrorComponent {
-  retry() { 
-    window.location.reload() ;
+  retry() {
+      window.location.reload() ;   
   }
 }

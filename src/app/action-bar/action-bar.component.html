@@ -1,10 +1,10 @@
 <mat-toolbar color="primary">
-  <span>Manage Servers</span>
+  <span class="title">Manage Servers</span>
   
   <span class="spacer"></span>
   
   <!-- Status Filter -->
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" class="status-filter">
     <mat-label>Status</mat-label>
     <mat-select [(ngModel)]="selectedStatus" (selectionChange)="filter()">
       <mat-option value="ALL">ALL</mat-option>
@@ -14,13 +14,13 @@
   </mat-form-field>
 
   <!-- New Server Button -->
-  <button mat-raised-button color="accent" (click)="onClick()" >
+  <button mat-raised-button color="accent" (click)="onClick()" class="add-button" >
     <mat-icon>add</mat-icon>
     New Server
   </button>
 
   <!-- Print Report Button -->
-  <button mat-raised-button color="warn" (click)="print()" >
+  <button mat-raised-button color="warn" (click)="print()" class="print-button" >
     <mat-icon>print</mat-icon>
     Print Report
   </button>

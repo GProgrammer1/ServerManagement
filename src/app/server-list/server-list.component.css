@@ -9,7 +9,7 @@ table.mat-elevation-z8 {
 /* Ensures table headers and cells have padding and text alignment */
 th.mat-header-cell, td.mat-cell {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 6px;
     text-align: center;
 }
 
@@ -24,7 +24,7 @@ th.mat-header-cell, td.mat-cell {
 
 /* Makes sure the table headers are distinguishable */
 th.mat-header-cell {
-    background-color: #f2f2f2;
+    background-color: white;
     font-weight: bold;
     text-align: center;
 }
@@ -36,6 +36,28 @@ th.mat-header-cell {
 .loading-icon {
     margin: 0 auto;
 }
+
+.empty-message {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Make the height of the container full viewport height */
+    width: 100%; /* Ensure the container takes full width */
+    text-align: center;
+}
+
+.error-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%; /* Inherit from the parent */
+    width: 100%;
+    font-size: 50px;
+    
+    
+}
+
 
 
 

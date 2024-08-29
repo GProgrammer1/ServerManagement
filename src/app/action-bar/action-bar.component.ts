@@ -32,8 +32,6 @@ export class ActionBarComponent {
   }
 
   filter() {
-    console.log(this.selectedStatus);
-    
     this.communicator.filter(this.selectedStatus) ;
   }
 

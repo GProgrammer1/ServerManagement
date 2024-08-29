@@ -1,6 +1,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
-//to be reviewed
+
 export const HttpInterceptor: HttpInterceptorFn = (req, next) => {
   const newReq = req.clone ({
     setHeaders: {
@@ -8,5 +8,5 @@ export const HttpInterceptor: HttpInterceptorFn = (req, next) => {
     }
   });
 
-  return next(req);
+  return next(newReq);
 };

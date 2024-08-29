@@ -1,5 +1,5 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, combineLatest, Observable, of, Subject } from 'rxjs';
+import {  Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { ResponseBody, Server } from './model/models.model';
 import { ServerService } from './server-list/server.service';
 
@@ -10,111 +10,76 @@ import { ServerService } from './server-list/server.service';
 export class CommunicatorService {
   
   serversSubject = new BehaviorSubject<Server[]>([]);
-  errorSubject = new BehaviorSubject<string>('') ;
   servers$ = this.serversSubject.asObservable();
-  error$ = this.errorSubject.asObservable() ;
-  combined$ = combineLatest([this.servers$, this.error$]) ;
   serverList : Server[] =  [] ;
-  dataReady : boolean = false ;
+  
 
-  routerSubject = new BehaviorSubject<string>('') ;
-  router$ = this.routerSubject.asObservable() ;
-  constructor(private serverService: ServerService) {
-    this.loadServers();
+  errorSubject = new BehaviorSubject<string>('') ;
+  error$ = this.errorSubject.asObservable() ;
+
+  constructor(private service : ServerService){
+    
   }
-
   route(data : string) {
-    this.routerSubject.next(data) ;
-  }
-  private loadServers() {
-    // console.log('a');
-    
-    // this.serverService.getServers().pipe(
-    //   catchError(error => {
-    //     console.log(error);
-        
-    //     this.errorSubject.next('Failed to load servers: ' + error) ; 
-    //     return of({data : {servers: [] as Server[]} } ) as Observable<ResponseBody<{servers: Server[]}>>; 
-    //   }
-      
-    //   ))
-    //   .subscribe( 
-    //   (response: ResponseBody<{ servers: Server[] }>) => { 
-    //     if (response.data.servers.length > 0) {
-    //     console.log(response);
-        
-    //     this.serverList = response.data.servers ;
-    //     console.log(this.serverList);
-        
-    //     this.serversSubject.next(this.serverList); 
-    //     console.log(this.serversSubject.value);
-    //     this.dataReady = true ;
-    //   }
-    // }
-    
-    // );
-    
+    this.errorSubject.next(data) ;
   }
 
+  
   addServer(server: Server) {
-    this.serverService.createServer(server).subscribe( {
+    this.service.createServer(server).subscribe( {
       next :
       (response: ResponseBody<{ server: Server }>) => {
         
         
         const serverElement: Server = response.data.server;
         const updatedServers = [...this.serversSubject.value, serverElement];
-        this.serverList.push(serverElement); 
-        this.serversSubject.next(updatedServers);
-      }
-    
-    
-    
+        this.serverList.push(serverElement) ;
+        this.serversSubject.next(updatedServers) ;
+      }, 
+      error: err => {
+        this.errorSubject.next('Server Down') ;
+      } 
   });
   }
 
   deleteServer(id: number) {
 
-    this.serverService.deleteServer(id).subscribe(
-      (response: ResponseBody<{ server: Server }>) => {
-
+    this.service.deleteServer(id).subscribe({
+     next : (response: ResponseBody<{ server: Server }>) => {
+         
         const serverDeleted: Server = response.data.server;
-        console.log(serverDeleted.id);
         this.serverList = this.serverList.filter(server => server.id !== serverDeleted.id)
         const updatedServers = this.serversSubject.value.filter(server => server.id !== serverDeleted.id);
-        this.serversSubject.next(updatedServers);
-      }
-    );
+        this.serversSubject.next(updatedServers) ;
+      },
+    error : err => {
+      this.errorSubject.next('Server Down') ;
+    }
+    });
   }
 
   ping(ipAddress: string) {
-    this.serverService.pingServer(ipAddress).subscribe(
-      (response: ResponseBody<{ server: Server }>) => {
-        console.log(response.data);
-        
+    this.service.pingServer(ipAddress).subscribe({
+      next:  (response: ResponseBody<{ server: Server }>) => {
         
         const serverResult: Server = response.data.server;
-        this.serverList = this.serverList.map(server =>
-          server.ipAddress === ipAddress ? { ...server, status: serverResult.status } : server
-        );
         const updatedServers = this.serversSubject.value.map(server =>
           server.ipAddress === ipAddress ? { ...server, status: serverResult.status } : server
         );
-        this.serversSubject.next(updatedServers);
+        this.serverList = this.serverList.map(server =>
+          server.ipAddress === ipAddress ? { ...server, status: serverResult.status } : server); 
+          this.serversSubject.next(updatedServers) ;     
       }
-    );
+    });
   }
 
   filter(status: string) {
     if (status === 'ALL') {
-      this.loadServers(); // Reload the full list
+      this.serversSubject.next(this.serverList) ;
       return;
     }
     const filteredServers = this.serverList.filter(server => server.status === status);
     this.serversSubject.next(filteredServers);
   }
-}
-function subscribe(arg0: (response: ResponseBody<{ servers: Server[]; }>) => void): import("rxjs").OperatorFunction<any, unknown> {
-  throw new Error('Function not implemented.');
 }
 

@@ -45,7 +45,7 @@ export class AddServerComponent implements OnInit {
         nonNullable: true
       }),
       name: new FormControl<string>('', {
-        validators: Validators.required,
+        validators: Validators.required, 
         nonNullable: true
       }),
       type: new FormControl<string>('', {
@@ -65,7 +65,6 @@ export class AddServerComponent implements OnInit {
     }
     const server = this.addServer.getRawValue() as Server;
     server.status = Status.SERVER_DOWN;
-    console.log(server);
     this.communicator.addServer(server);
     this.dialogRef.close();
   }

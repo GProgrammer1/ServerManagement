@@ -1,3 +1,4 @@
+@if( (servers$ | async)!.length > 0) {
 <table mat-table [dataSource]="serverData" class="mat-elevation-z8 image-container" > <!--mat-elevation-z8 gives the table a shadow-->
     <ng-container matColumnDef="imageURL">
         <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Image URL </th>
@@ -69,3 +70,11 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+}
+@else {
+    <div class="empty-message">
+        <p class="error-message">No Servers To Display</p>
+    </div>
+}
+
+
